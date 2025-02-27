@@ -24,14 +24,14 @@ import { HelmetProvider } from 'react-helmet-async';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-    <BrowserRouter>
       <AuthProvider>
+    <BrowserRouter>
         <BookingProvider>
           <App />
           <Toaster position="top-center" reverseOrder={false} />
         </BookingProvider>
-      </AuthProvider>
     </BrowserRouter>
+      </AuthProvider>
     </HelmetProvider>
   </React.StrictMode>,
 )

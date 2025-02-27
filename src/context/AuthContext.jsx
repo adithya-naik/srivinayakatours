@@ -50,6 +50,11 @@ function authReducer(state, action) {
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+// In your AuthProvider
+useEffect(() => {
+  console.log("Auth state changed:", state);
+}, [state]);
+
   // Check if user is logged in on app load
   useEffect(() => {
     const checkAuth = () => {
@@ -75,32 +80,32 @@ export const AuthProvider = ({ children }) => {
   // Login Function
   const login = async (credentials) => {
     dispatch({ type: "LOGIN_REQUEST" });
-
+  
     try {
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const user = users.find(
         (u) => u.email === credentials.email && u.password === credentials.password
       );
-
+  
       if (!user) {
         throw new Error("Invalid email or password");
       }
-
+  
       // Store remembered user if checkbox is checked
       if (credentials.rememberMe) {
         localStorage.setItem(
-          "rememberedUser",
+          "rememberedUser ",
           JSON.stringify({ email: user.email })
         );
       } else {
-        localStorage.removeItem("rememberedUser");
+        localStorage.removeItem("rememberedUser ");
       }
-
+  
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
       });
-
+  
       return user;
     } catch (error) {
       dispatch({
