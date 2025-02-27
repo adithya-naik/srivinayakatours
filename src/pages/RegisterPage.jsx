@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { User, Mail, Lock, Eye, EyeOff, Phone, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { AuthContext } from "../context/AuthContext"; // Import the AuthContext
 
 const RegisterPage = () => {
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -59,6 +61,13 @@ const RegisterPage = () => {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
+    } else {
+      // Check if email already exists in localStorage
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const emailExists = users.some(user => user.email === formData.email);
+      if (emailExists) {
+        newErrors.email = "Email is already registered";
+      }
     }
     
     if (!formData.phone) {
@@ -115,16 +124,40 @@ const RegisterPage = () => {
     setStep(1);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validateStep2()) {
       setIsLoading(true);
       
-      // Simulate API call
-      setTimeout(() => {
-        setIsLoading(false);
-        toast.success("Registration successful! Please check your email to verify your account.", {
+      try {
+        // Get existing users from localStorage or initialize empty array
+        const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+        
+        // Create new user object
+        const newUser = {
+          id: Date.now().toString(), // Simple unique ID
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password, // Note: In a real app, never store plain text passwords
+          createdAt: new Date().toISOString()
+        };
+        
+        // Add new user to array
+        existingUsers.push(newUser);
+        
+        // Save updated users array to localStorage
+        localStorage.setItem('users', JSON.stringify(existingUsers));
+        
+        // Auto-login the user after registration
+        await login({
+          email: formData.email,
+          password: formData.password
+        });
+        
+        toast.success("Registration successful! You are now logged in.", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -132,7 +165,8 @@ const RegisterPage = () => {
           pauseOnHover: true,
           draggable: true,
         });
-        // Reset form after successful submission
+        
+        // Reset form
         setFormData({
           firstName: "",
           lastName: "",
@@ -141,10 +175,16 @@ const RegisterPage = () => {
           password: "",
           confirmPassword: "",
         });
-        setStep(1);
-        // Redirect to login page or dashboard
-        // window.location.href = "/login";
-      }, 1500);
+        
+        // Redirect to dashboard/home
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1500);
+      } catch (error) {
+        toast.error("Registration failed: " + error.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 

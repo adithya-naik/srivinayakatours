@@ -1,119 +1,128 @@
+import React,{ createContext, useReducer, useEffect } from "react";
 
-import React,{ createContext, useReducer,useEffect } from 'react';
-
+// Create Context
 export const AuthContext = createContext();
 
-// Initial state
+// Initial State
 const initialState = {
   user: null,
   isAuthenticated: false,
   loading: false,
-  error: null
+  error: null,
 };
 
-// Reducer function
+// Reducer Function
 function authReducer(state, action) {
   switch (action.type) {
-    case 'LOGIN_REQUEST':
+    case "LOGIN_REQUEST":
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
-    case 'LOGIN_SUCCESS':
+    case "LOGIN_SUCCESS":
       return {
         ...state,
         user: action.payload,
         isAuthenticated: true,
         loading: false,
-        error: null
+        error: null,
       };
-    case 'LOGIN_FAILURE':
+    case "LOGIN_FAILURE":
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
-    case 'LOGOUT':
+    case "LOGOUT":
       return {
         ...state,
         user: null,
         isAuthenticated: false,
-        error: null
-      };
-    case 'CLEAR_ERROR':
-      return {
-        ...state,
-        error: null
+        error: null,
       };
     default:
       return state;
   }
 }
 
-// Provider component
+// Provider Component
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Check if user is logged in
+  // Check if user is logged in on app load
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: JSON.parse(user)
-      });
-    }
+    const checkAuth = () => {
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const rememberedUser = localStorage.getItem("rememberedUser");
+
+      if (rememberedUser) {
+        const { email } = JSON.parse(rememberedUser);
+        const user = users.find((u) => u.email === email);
+
+        if (user) {
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: user,
+          });
+        }
+      }
+    };
+
+    checkAuth();
   }, []);
 
-  // Login function
+  // Login Function
   const login = async (credentials) => {
-    dispatch({ type: 'LOGIN_REQUEST' });
-    
+    dispatch({ type: "LOGIN_REQUEST" });
+
     try {
-      // In a real app, this would be an API call
-      // Simulating API call
-      const user = {
-        id: '1',
-        name: 'Test User',
-        email: credentials.email,
-      };
-      
-      localStorage.setItem('user', JSON.stringify(user));
-      
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const user = users.find(
+        (u) => u.email === credentials.email && u.password === credentials.password
+      );
+
+      if (!user) {
+        throw new Error("Invalid email or password");
+      }
+
+      // Store remembered user if checkbox is checked
+      if (credentials.rememberMe) {
+        localStorage.setItem(
+          "rememberedUser",
+          JSON.stringify({ email: user.email })
+        );
+      } else {
+        localStorage.removeItem("rememberedUser");
+      }
+
       dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: user
+        type: "LOGIN_SUCCESS",
+        payload: user,
       });
-      
+
       return user;
     } catch (error) {
       dispatch({
-        type: 'LOGIN_FAILURE',
-        payload: error.message
+        type: "LOGIN_FAILURE",
+        payload: error.message,
       });
       throw error;
     }
   };
 
-  // Logout function
+  // Logout Function
   const logout = () => {
-    localStorage.removeItem('user');
-    dispatch({ type: 'LOGOUT' });
-  };
-
-  // Clear error
-  const clearError = () => {
-    dispatch({ type: 'CLEAR_ERROR' });
+    localStorage.removeItem("rememberedUser");
+    dispatch({ type: "LOGOUT" });
   };
 
   return (
     <AuthContext.Provider
       value={{
-        ...state,
+        state,
         login,
         logout,
-        clearError
       }}
     >
       {children}

@@ -78,7 +78,7 @@ const TourCard = ({ pkg, index }) => {
 };
 
 const FeaturedTours = () => {
-  const featuredPackages = packages.filter(pkg => pkg.featured).slice(0, 6);
+  const featuredPackages = packages.filter(pkg => pkg.featured).slice(0, 3);
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
