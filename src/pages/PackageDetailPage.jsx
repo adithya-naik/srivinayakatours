@@ -2,7 +2,7 @@
 import React,{ useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
-import { MapPin, Clock, Users, Check, X, Star, Calendar, ChevronRight, ChevronLeft } from "lucide-react"
+import { MapPin, Clock, Users, Check,CircleCheck,CirclePlus ,X,CircleX, Star, Calendar, ChevronRight, ChevronLeft } from "lucide-react"
 
 // Import the mock data
 import { packages } from "../data/packages"
@@ -175,7 +175,7 @@ const PackageDetailPage = () => {
                   {/* Inclusions */}
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                      <Check className="mr-2 text-green-500" size={20} />
+                      <CircleCheck className="mr-2 text-green-500" size={20} />
                       Inclusions
                     </h3>
                     <ul className="space-y-3">
@@ -191,7 +191,7 @@ const PackageDetailPage = () => {
                   {/* Exclusions */}
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                      <X className="mr-2 text-red-500" size={20} />
+                      <CircleX className="mr-2 text-red-500" size={20} />
                       Exclusions
                     </h3>
                     <ul className="space-y-3">

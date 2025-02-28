@@ -49,7 +49,7 @@ const CTASection = () => {
                 <motion.div variants={staggerChildren} initial="hidden" animate="visible" className="space-y-4">
                   <motion.a
                     variants={fadeIn}
-                    href="#"
+                    href="/contact"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="flex items-center justify-between w-full px-5 py-3 bg-white text-blue-700 font-medium rounded-lg hover:bg-blue-50 transition-colors"

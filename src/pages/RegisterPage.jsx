@@ -201,7 +201,7 @@ const RegisterPage = () => {
                     className={`block w-full px-3 py-2 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm`}
                     placeholder="••••••••"
                   />
-                  <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button type="button"  className="absolute inset-y-0 right-0 pr-3 flex items-center">
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                   {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
@@ -218,7 +218,7 @@ const RegisterPage = () => {
                     className={`block w-full px-3 py-2 border ${errors.confirmPassword ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm`}
                     placeholder="••••••••"
                   />
-                  <button type="button" onClick={toggleConfirmPasswordVisibility} className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button type="button"  className="absolute inset-y-0 right-0 pr-3 flex items-center">
                     {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
                   {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>}

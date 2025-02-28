@@ -197,7 +197,7 @@ const BusFleetSection = ({ hoveredIcon, setHoveredIcon }) => {
           </p>
         </div>
 
-        <div className="relative grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-12">
+        <div className="relative grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-12 m-10">
           {busFleet.map((bus, index) => (
             <BusCard
               key={index}

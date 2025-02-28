@@ -20,13 +20,35 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Updated to also check localStorage for the most updated user state
   useEffect(() => {
-    if (state.isAuthenticated) {
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const loggedInUser = users.find(user => user.email === state.user?.email);
-      if (loggedInUser) {
-        setUserDetails(loggedInUser);
+    if (state.isAuthenticated && state.user) {
+      const savedAuthState = localStorage.getItem("authState");
+      
+      if (savedAuthState) {
+        const { user } = JSON.parse(savedAuthState);
+        // Get full user details from users array
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const loggedInUser = users.find(u => u.email === user.email);
+        
+        if (loggedInUser) {
+          setUserDetails(loggedInUser);
+        } else {
+          setUserDetails(user);
+        }
+      } else {
+        // Fallback to context state
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const loggedInUser = users.find(u => u.email === state.user.email);
+        
+        if (loggedInUser) {
+          setUserDetails(loggedInUser);
+        } else {
+          setUserDetails(state.user);
+        }
       }
+    } else {
+      setUserDetails(null);
     }
   }, [state.isAuthenticated, state.user]);
 

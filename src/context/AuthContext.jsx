@@ -1,4 +1,4 @@
-import React,{ createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 
 // Create Context
 export const AuthContext = createContext();
@@ -50,14 +50,37 @@ function authReducer(state, action) {
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-// In your AuthProvider
-useEffect(() => {
-  console.log("Auth state changed:", state);
-}, [state]);
+  // Log state changes
+  useEffect(() => {
+    console.log("Auth state changed:", state);
+    
+    // Persist authentication state to localStorage
+    if (state.isAuthenticated && state.user) {
+      localStorage.setItem("authState", JSON.stringify({
+        user: state.user,
+        isAuthenticated: true
+      }));
+    } else if (!state.isAuthenticated) {
+      localStorage.removeItem("authState");
+    }
+  }, [state]);
 
   // Check if user is logged in on app load
   useEffect(() => {
     const checkAuth = () => {
+      // First check for previously saved auth state
+      const savedAuthState = localStorage.getItem("authState");
+      
+      if (savedAuthState) {
+        const { user } = JSON.parse(savedAuthState);
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: user,
+        });
+        return;
+      }
+      
+      // Fallback to check for remembered user
       const users = JSON.parse(localStorage.getItem("users") || "[]");
       const rememberedUser = localStorage.getItem("rememberedUser");
 
@@ -94,11 +117,11 @@ useEffect(() => {
       // Store remembered user if checkbox is checked
       if (credentials.rememberMe) {
         localStorage.setItem(
-          "rememberedUser ",
+          "rememberedUser",
           JSON.stringify({ email: user.email })
         );
       } else {
-        localStorage.removeItem("rememberedUser ");
+        localStorage.removeItem("rememberedUser");
       }
   
       dispatch({
@@ -119,6 +142,7 @@ useEffect(() => {
   // Logout Function
   const logout = () => {
     localStorage.removeItem("rememberedUser");
+    localStorage.removeItem("authState");
     dispatch({ type: "LOGOUT" });
   };
 

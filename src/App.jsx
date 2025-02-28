@@ -15,7 +15,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsConditionsPage from './pages/TermsConditionsPage';
 import CancellationPolicyPage from './pages/CancellationPolicyPage';
 import NotFoundPage from './pages/NotFoundPage';
-import MyOrders from "./components/MyOrders.jsx"
+import MyBookingsPage from "./components/MyBookingsPage.jsx"
 import AOS from 'aos';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import 'aos/dist/aos.css';
@@ -44,7 +44,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/my-bookings" element={<MyOrders />} />
+          <Route path="/my-bookings" element={<MyBookingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-conditions" element={<TermsConditionsPage />} />
