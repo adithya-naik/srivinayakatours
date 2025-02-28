@@ -10,11 +10,14 @@ const BusCard = ({ bus, index, isActive, onClick }) => {
         ? "ring-2 ring-blue-600 shadow-xl transform rotate-15 scale-105 z-10" 
         : "hover:-translate-y-2 hover:shadow-lg"}`}
       onClick={() => onClick(index)}
-      style={{transformOrigin: "center"}}
+      style={{
+        transformOrigin: "center",
+        animation: isActive ? "fallDown 0.6s ease-in-out forwards" : "none"
+      }}
     >
       <div className="relative h-48 bg-gradient-to-tr from-blue-800 to-blue-600 overflow-hidden">
         {isActive && (
-          <div className="absolute top-3 right-3 bg-blue-100 text-blue-800 rounded-full p-1 z-20">
+          <div className="absolute top-3 right-3 bg-blue-100 text-blue-800 rounded-full p-1 z-20 animate-bounce">
             <CheckCircle size={20} />
           </div>
         )}
@@ -122,10 +125,8 @@ const BusDetails = ({ bus }) => {
     </div>
   );
 };
-
 const BusFleetSection = ({ hoveredIcon, setHoveredIcon }) => {
   const [activeBus, setActiveBus] = useState(0);
-  
   // Sample bus fleet data with appropriate Lucide icons for features
   const busFleet = [
     {
@@ -178,6 +179,18 @@ const BusFleetSection = ({ hoveredIcon, setHoveredIcon }) => {
 
   return (
     <div className="bg-gradient-to-b from-white to-blue-50 py-20">
+      <style jsx global>{`
+        @keyframes fallDown {
+          0% { 
+            transform: translateY(-30px) rotate(15deg) scale(1.05);
+            opacity: 0.7;
+          }
+          60% { 
+            transform: translateY(10px) rotate(15deg) scale(1.05);
+            opacity: 0.9;
+          }
+        }
+      `}</style>
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="inline-block p-3 bg-blue-100 rounded-full mb-4">

@@ -22,6 +22,7 @@ const FeatureCard = ({ icon, title, children, delay, className = "" }) => {
       data-aos="fade-up"
       data-aos-delay={delay}
     >
+      <div className="h-1 bg-gradient-to-r from-blue-500 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
       <div className="p-6 border-b border-gray-100">
         <div className="flex items-center mb-4">
           <div className="mr-3 flex-shrink-0 p-3 bg-blue-100 rounded-lg transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3 group-hover:bg-blue-200">
@@ -44,7 +45,7 @@ const FeatureCard = ({ icon, title, children, delay, className = "" }) => {
       </div>
       
       {/* Decorative border */}
-      <div className="h-1 bg-gradient-to-r from-blue-500 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+      
     </div>
   );
 };

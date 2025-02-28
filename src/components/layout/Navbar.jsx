@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, User, ShoppingBag, LogOut, Gift, AlertCircle } from "lucide-react";
 import { AuthContext } from "../../context/AuthContext"; 
 import { motion, AnimatePresence } from "framer-motion";
-
+import logo from "../../../public/logo.png"
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -84,16 +84,16 @@ const Navbar = () => {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-2" : "bg-blue-600 bg-opacity-80 py-4"}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 px-4 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-2" : "bg-blue-600 bg-opacity-80 py-4"}`}>
       <div className="container flex items-center mx-auto justify-between">
         <Link to="/" className="flex items-center">
           <img 
-            src="/logo.png" 
+            src={logo} 
             alt="Sri Vinayaka Travels Logo" 
             className="h-10 w-auto mr-2"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "https://via.placeholder.com/40x40?text=SVT";
+              
             }}
           />
           <h1 className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? "text-primary-dark" : "text-white"}`}>
@@ -221,7 +221,7 @@ const Navbar = () => {
                 ))}
                 
                 {/* My Bookings Mobile Link */}
-                <Link 
+                {/* <Link 
                   to={state.isAuthenticated ? "/my-bookings" : "#"} 
                   onClick={handleBookingsClick}
                   className={`flex items-center py-3 px-4 rounded-md text-sm font-medium transition-colors duration-300 ${
@@ -232,7 +232,7 @@ const Navbar = () => {
                 >
                   <ShoppingBag size={16} className="mr-2" />
                   My Bookings
-                </Link>
+                </Link> */}
               </div>
               
               {/* Authentication Section */}

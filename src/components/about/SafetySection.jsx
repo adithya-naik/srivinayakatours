@@ -5,29 +5,47 @@ import IconWithHover from "./IconWithHover";
 const SafetyCard = ({ title, description, features, icon, delay, isVisible, cardId }) => {
   return (
     <div 
-      className={`bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg shadow-lg overflow-hidden transition-all duration-700 hover:shadow-2xl transform hover:-translate-y-2 ${isVisible[cardId] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-    >
-      <div className="p-6 text-white">
-        <div className="bg-blue-500 bg-opacity-20 p-3 rounded-full inline-block mb-4 transition-all duration-500 hover:bg-opacity-30 hover:rotate-6 hover:scale-110">
-          {icon}
-        </div>
-        <h3 className="text-xl font-bold mb-3 flex items-center group">
-          <span className="mr-2">{title}</span>
-          <ChevronRight size={18} className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:translate-x-1" />
-        </h3>
-        <p>{description}</p>
-        <ul className="mt-4 space-y-2">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-start group">
-              <div className="transform transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 bg-blue-500 bg-opacity-20 rounded-full p-0.5 mr-2 mt-0.5 flex-shrink-0 text-white">
-                <CheckCircle size={14} />
-              </div>
-              <span className="text-sm transition-all duration-300 group-hover:translate-x-1">{feature}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+  className={`bg-gradient-to-br from-blue-600 to-indigo-600 cursor-pointer rounded-2xl shadow-lg overflow-hidden transition-all duration-700 hover:shadow-2xl transform hover:-translate-y-2 
+  ${isVisible[cardId] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} 
+  flex flex-col h-full`}
+>
+  <div className="p-6 text-white flex flex-col h-full">
+    
+    {/* Icon */}
+    <div className="bg-blue-500  bg-opacity-20 p-3 rounded-full inline-flex mb-4 transition-all duration-500 
+    hover:bg-opacity-30 hover:rotate-6 hover:scale-110 self-start">
+      {icon}
     </div>
+
+    {/* Title with Chevron */}
+    <h3 className="text-xl font-bold mb-3 flex items-center justify-between group">
+      <span>{title}</span>
+      <ChevronRight 
+        size={20} 
+        className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:translate-x-1" 
+      />
+    </h3>
+
+    {/* Description */}
+    <p className="text-sm mb-4 flex-1">{description}</p>
+
+    {/* Feature List */}
+    <ul className="space-y-2">
+      {features.map((feature, index) => (
+        <li key={index} className="flex items-center group">
+          <div className="transform transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 
+          bg-blue-500 bg-opacity-20 rounded-full p-1 flex-shrink-0 text-white">
+            <CheckCircle size={16} />
+          </div>
+          <span className="text-sm ml-2 transition-all duration-300 group-hover:translate-x-1">
+            {feature}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
   );
 };
 
@@ -140,10 +158,10 @@ const SafetySection = ({ registerRef, hoveredIcon, setHoveredIcon }) => {
         </div>
         
         <div className="mt-16 bg-white rounded-lg shadow-lg p-6 max-w-3xl mx-auto">
-          <div className="flex items-start">
-            <div className="bg-blue-100 p-3 rounded-full mr-4 flex-shrink-0">
+            <div className=" p-3 rounded-full mr-4 flex-shrink-0">
               <ShieldCheck size={24} className="text-blue-600" />
             </div>
+          <div className="flex items-start">
             <div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Our Safety Promise</h3>
               <p className="text-gray-600">

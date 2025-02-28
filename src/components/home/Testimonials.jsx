@@ -5,6 +5,11 @@ import { FaQuoteLeft, FaStar } from 'react-icons/fa';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Container from '../layout/Container';
 
+import test1 from "../../assets/testimonials/test1.jpg"
+import test2 from "../../assets/testimonials/test2.png"
+import test3 from "../../assets/testimonials/test3.jpg"
+
+
 // Updated testimonials data structure
 const testimonials = [
   {
@@ -13,7 +18,7 @@ const testimonials = [
     location: 'Bangalore',
     rating: 5,
     content: 'The Statue of Equality tour was absolutely amazing. The guide was knowledgeable and the bus was comfortable. Will definitely book with Sri Vinayaka Travels again!',
-    avatar: '/assets/images/testimonials/user1.jpg',
+    avatar: test1,
   },
   {
     id: 2,
@@ -21,7 +26,7 @@ const testimonials = [
     location: 'Chennai',
     rating: 4,
     content: 'Our family enjoyed the Ramoji Film City tour. The booking process was simple and the tour was well organized. Just wish we had a bit more time at certain attractions.',
-    avatar: '/assets/images/testimonials/user2.jpg',
+    avatar: test2,
   },
   {
     id: 3,
@@ -29,7 +34,7 @@ const testimonials = [
     location: 'Mumbai',
     rating: 5,
     content: 'Excellent service from start to finish. The Charminar City Tour was informative and the bus was very comfortable. The driver was skilled and safety was clearly a priority.',
-    avatar: '/assets/images/testimonials/user3.jpg',
+    avatar:test3,
   },
   {
     id: 4,
@@ -37,7 +42,7 @@ const testimonials = [
     location: 'Delhi',
     rating: 5,
     content: 'The Golconda Fort Explorer tour exceeded our expectations. The guide was passionate about history and made everything so interesting. Highly recommend!',
-    avatar: '/assets/images/testimonials/user4.jpg',
+    avatar: test3,
   },
 ];
 
@@ -97,7 +102,7 @@ const TestimonialCard = ({ testimonial, isActive }) => {
               <img
                 src={testimonial.avatar || '/assets/images/testimonials/default-avatar.jpg'}
                 alt={testimonial.name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-primary-light"
+                className="w-16 h-16 rounded-full object-cover"
               />
               <div className="absolute -bottom-1 -right-1 bg-primary text-white rounded-full p-1">
                 <FaStar size={10} />
@@ -234,8 +239,8 @@ const Testimonials = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    currentIndex === index ? 'w-6 bg-primary' : 'bg-gray-300'
+                  className={`w-2 h-2 rounded-full bg-gray-400 transition-all duration-300 ${
+                    currentIndex === index ? 'w-6 bg-primary' : 'bg-white-600'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />

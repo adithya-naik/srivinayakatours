@@ -183,11 +183,7 @@ const AboutPage = () => {
               className="h-full"
             >
               <p className="mb-4">
-                Sri Vinayaka Travels is committed to provide consistently high
-                quality of services and to continuously improve the services
-                through teamwork for the utmost satisfaction of the passengers
-                and to attain a position of pre-eminence in the bus transport
-                sector.
+              Sri Vinayaka Travels is dedicated to delivering high-quality services and continually enhancing them through teamwork to ensure passenger satisfaction and lead the bus transport sector.
               </p>
               <ul className="mt-2 space-y-2">
                 {[

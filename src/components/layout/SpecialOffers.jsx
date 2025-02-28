@@ -3,7 +3,10 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Gift, AlertCircle, Copy, Check, Calendar, Tag } from "lucide-react";
 import { toast } from "react-hot-toast";
-
+import p1 from "../../assets/offers/p1.jpg"
+import p2 from "../../assets/offers/p2.jpg"
+import d1 from "../../assets/offers/d1.avif"
+import d2 from "../../assets/offers/d2.jpg"
 const SpecialOffers = () => {
   const { state } = useContext(AuthContext);
   const [copiedCode, setCopiedCode] = useState(null);
@@ -15,7 +18,7 @@ const SpecialOffers = () => {
       description: "Get 15% off on any package booking made 30 days in advance.",
       code: "EARLY15",
       validUntil: "2025-05-31",
-      image: "/images/offers/early-bird.jpg",
+      image: d1,
       type: "discount"
     },
     {
@@ -24,7 +27,7 @@ const SpecialOffers = () => {
       description: "Book for 4 or more people and get a complimentary airport transfer.",
       code: "FAMILY4",
       validUntil: "2025-04-30",
-      image: "/images/offers/family-package.jpg",
+      image: p1,
       type: "package"
     },
     {
@@ -33,7 +36,7 @@ const SpecialOffers = () => {
       description: "Returning customers get 10% off their next booking.",
       code: "LOYAL10",
       validUntil: "2025-06-15",
-      image: "/images/offers/loyal-customer.jpg",
+      image: d2,
       type: "discount"
     },
     {
@@ -42,9 +45,27 @@ const SpecialOffers = () => {
       description: "Book a weekend stay and get a free spa treatment session.",
       code: "WEEKEND",
       validUntil: "2025-07-31",
-      image: "/images/offers/weekend.jpg",
+      image:p2,
       type: "package"
-    }
+    },
+    {
+      id: 1,
+      title: "Early Bird Discount",
+      description: "Get 15% off on any package booking made 30 days in advance.",
+      code: "EARLY15",
+      validUntil: "2025-05-31",
+      image: d1,
+      type: "discount"
+    },
+    {
+      id: 2,
+      title: "Family Package Deal",
+      description: "Book for 4 or more people and get a complimentary airport transfer.",
+      code: "FAMILY4",
+      validUntil: "2025-04-30",
+      image: p1,
+      type: "package"
+    },
   ]);
 
   // Check for expiring offers

@@ -9,7 +9,7 @@ import Statistics from '../components/home/Statistics';
 import FeaturedTours from '../components/home/FeaturedTours';
 import Testimonials from '../components/home/Testimonials';
 import LocationBanner from "../components/LocationBanner"
-
+import WhyChooseUs from '../components/WhyChooseUs';
 const HomePage = () => {
   useEffect(() => {
     // Initialize AOS animation library
@@ -37,7 +37,7 @@ const HomePage = () => {
       
       {/* Location Banner Section */}
       <LocationBanner />
-      
+      <WhyChooseUs/>
       {/* Testimonials Section */}
       <Testimonials />
     </>

@@ -1,13 +1,22 @@
-
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Filter, SlidersHorizontal, X, MapPin, Calendar, Users, Star, ChevronRight } from "lucide-react";
+import {
+  Search,
+  Filter,
+  SlidersHorizontal,
+  X,
+  MapPin,
+  Calendar,
+  Users,
+  Star,
+  ChevronRight,
+} from "lucide-react";
 
 import { packages } from "../data/packages";
 
 // // Inline data import to fix the issue
-// const packages = 
+// const packages =
 //   [
 //     {
 //       id: 1,
@@ -485,7 +494,6 @@ import { packages } from "../data/packages";
 //     },
 //   ];
 
-
 const PackagesPage = () => {
   const navigate = useNavigate();
   const [filteredPackages, setFilteredPackages] = useState(packages); // Initialize with all packages
@@ -528,7 +536,7 @@ const PackagesPage = () => {
     // Apply duration filter
     if (filters.duration.length > 0) {
       result = result.filter((pkg) => {
-        const daysPart = pkg.duration.split('/')[0].trim();
+        const daysPart = pkg.duration.split("/")[0].trim();
         return filters.duration.includes(daysPart);
       });
     }
@@ -540,13 +548,17 @@ const PackagesPage = () => {
 
     // Apply sorting
     if (sortBy === "price-low-high") {
-      result.sort((a, b) => a.plans[0].discountedPrice - b.plans[0].discountedPrice);
+      result.sort(
+        (a, b) => a.plans[0].discountedPrice - b.plans[0].discountedPrice
+      );
     } else if (sortBy === "price-high-low") {
-      result.sort((a, b) => b.plans[0].discountedPrice - a.plans[0].discountedPrice);
+      result.sort(
+        (a, b) => b.plans[0].discountedPrice - a.plans[0].discountedPrice
+      );
     } else if (sortBy === "duration-short-long") {
       result.sort((a, b) => {
-        const durationA = parseInt(a.duration.split(' ')[0]);
-        const durationB = parseInt(b.duration.split(' ')[0]);
+        const durationA = parseInt(a.duration.split(" ")[0]);
+        const durationB = parseInt(b.duration.split(" ")[0]);
         return durationA - durationB;
       });
     } else if (sortBy === "popularity") {
@@ -616,8 +628,9 @@ const PackagesPage = () => {
             Discover Our Tour Packages
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Explore our handpicked tour packages designed to provide you with unforgettable experiences. From scenic
-            destinations to cultural landmarks, we have it all.
+            Explore our handpicked tour packages designed to provide you with
+            unforgettable experiences. From scenic destinations to cultural
+            landmarks, we have it all.
           </p>
         </motion.div>
 
@@ -628,114 +641,132 @@ const PackagesPage = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="bg-white rounded-xl shadow-lg p-6 mb-8"
         >
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="text-gray-400" size={20} />
-              </div>
-              <input
-                type="text"
-                placeholder="Search for destinations, tours..."
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+          <div className="flex flex-row md:flex-row gap-4 justify-between">
 
-            <div className="flex gap-2">
-              <div className="relative">
-                <button
-                  className="flex items-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                  onClick={() => setShowFilters(!showFilters)}
-                >
-                  <Filter size={20} />
-                  <span className="hidden sm:inline">Filters</span>
-                </button>
-              </div>
 
-              <div className="relative">
-                <button
-                  className="flex items-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                  onClick={() => setShowSortOptions(!showSortOptions)}
-                >
-                  <SlidersHorizontal size={20} />
-                  <span className="hidden sm:inline">Sort</span>
-                </button>
 
-                {showSortOptions && (
-                  <div className="absolute right-0 top-full mt-2 bg-white shadow-xl rounded-lg overflow-hidden z-10 w-56">
-                    <div className="p-2">
-                      <button
-                        className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
-                          sortBy === "default" ? "bg-blue-50 text-blue-700" : ""
-                        }`}
-                        onClick={() => {
-                          setSortBy("default");
-                          setShowSortOptions(false);
-                        }}
-                      >
-                        Default
-                      </button>
-                      <button
-                        className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
-                          sortBy === "price-low-high" ? "bg-blue-50 text-blue-700" : ""
-                        }`}
-                        onClick={() => {
-                          setSortBy("price-low-high");
-                          setShowSortOptions(false);
-                        }}
-                      >
-                        Price: Low to High
-                      </button>
-                      <button
-                        className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
-                          sortBy === "price-high-low" ? "bg-blue-50 text-blue-700" : ""
-                        }`}
-                        onClick={() => {
-                          setSortBy("price-high-low");
-                          setShowSortOptions(false);
-                        }}
-                      >
-                        Price: High to Low
-                      </button>
-                      <button
-                        className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
-                          sortBy === "duration-short-long" ? "bg-blue-50 text-blue-700" : ""
-                        }`}
-                        onClick={() => {
-                          setSortBy("duration-short-long");
-                          setShowSortOptions(false);
-                        }}
-                      >
-                        Duration: Shortest first
-                      </button>
-                      <button
-                        className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
-                          sortBy === "popularity" ? "bg-blue-50 text-blue-700" : ""
-                        }`}
-                        onClick={() => {
-                          setSortBy("popularity");
-                          setShowSortOptions(false);
-                        }}
-                      >
-                        Popularity
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
+            
+  <div className="flex-1 relative">
+    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <Search className="text-gray-400" size={20} />
+    </div>
+    <input
+      type="text"
+      placeholder="Search for destinations, tours..."
+      className="pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 w-full"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+  </div>
 
-              {(searchTerm || filters.duration.length > 0 || filters.location) && (
-                <button
-                  className="flex items-center gap-2 px-4 py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
-                  onClick={handleReset}
-                >
-                  <X size={20} />
-                  <span className="hidden sm:inline">Reset</span>
-                </button>
-              )}
-            </div>
+  <div className="flex gap-2 items-center">
+    <div className="relative">
+      <button
+        className="flex items-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+        onClick={() => setShowFilters(!showFilters)}
+      >
+        <Filter size={20} />
+        <span className="hidden sm:inline">Filters</span>
+      </button>
+    </div>
+
+    <div className="relative">
+      <button
+        className="flex items-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+        onClick={() => setShowSortOptions(!showSortOptions)}
+      >
+        <SlidersHorizontal size={20} />
+        <span className="hidden sm:inline">Sort</span>
+      </button>
+
+      {showSortOptions && (
+        <div className="absolute right-0 top-full mt-2 bg-white shadow-xl rounded-lg overflow-hidden z-10 w-56">
+          <div className="p-2">
+            <button
+              className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
+                sortBy === "default" ? "bg-blue-50 text-blue-700" : ""
+              }`}
+              onClick={() => {
+                setSortBy("default");
+                setShowSortOptions(false);
+              }}
+            >
+              Default
+            </button>
+            <button
+              className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
+                sortBy === "price-low-high"
+                  ? "bg-blue-50 text-blue-700"
+                  : ""
+              }`}
+              onClick={() => {
+                setSortBy("price-low-high");
+                setShowSortOptions(false);
+              }}
+            >
+              Price: Low to High
+            </button>
+            <button
+              className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
+                sortBy === "price-high-low"
+                  ? "bg-blue-50 text-blue-700"
+                  : ""
+              }`}
+              onClick={() => {
+                setSortBy("price-high-low");
+                setShowSortOptions(false);
+              }}
+            >
+              Price: High to Low
+            </button>
+            <button
+              className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
+                sortBy === "duration-short-long"
+                  ? "bg-blue-50 text-blue-700"
+                  : ""
+              }`}
+              onClick={() => {
+                setSortBy("duration-short-long");
+                setShowSortOptions(false);
+              }}
+            >
+              Duration: Shortest first
+            </button>
+            <button
+              className={`w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 ${
+                sortBy === "popularity"
+                  ? "bg-blue-50 text-blue-700"
+                  : ""
+              }`}
+              onClick={() => {
+                setSortBy("popularity");
+                setShowSortOptions(false);
+              }}
+            >
+              Popularity
+            </button>
           </div>
+        </div>
+      )}
+    </div>
+
+    {(searchTerm || filters.duration.length > 0 || filters.location) && (
+      <button
+        className="flex items-center gap-2 px-4 py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+        onClick={handleReset}
+      >
+        <X size={20} />
+        <span className="hidden sm:inline">Reset</span>
+      </button>
+    )}
+  </div>
+</div>
+
+
+
+
+
+
 
           {/* Filters Panel */}
           {showFilters && (
@@ -748,9 +779,13 @@ const PackagesPage = () => {
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-3">Price Range</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3">
+                    Price Range
+                  </h3>
                   <div className="flex items-center gap-4">
-                    <span className="text-gray-700 min-w-[80px]">₹{filters.priceRange[1].toLocaleString()}</span>
+                    <span className="text-gray-700 min-w-[80px]">
+                      ₹{filters.priceRange[1].toLocaleString()}
+                    </span>
                     <input
                       type="range"
                       min="0"
@@ -759,7 +794,13 @@ const PackagesPage = () => {
                       className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
                       value={filters.priceRange[1]}
                       onChange={(e) =>
-                        setFilters({ ...filters, priceRange: [filters.priceRange[0], parseInt(e.target.value)] })
+                        setFilters({
+                          ...filters,
+                          priceRange: [
+                            filters.priceRange[0],
+                            parseInt(e.target.value),
+                          ],
+                        })
                       }
                     />
                   </div>
@@ -789,7 +830,9 @@ const PackagesPage = () => {
                   <select
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                     value={filters.location}
-                    onChange={(e) => setFilters({ ...filters, location: e.target.value })}
+                    onChange={(e) =>
+                      setFilters({ ...filters, location: e.target.value })
+                    }
                   >
                     <option value="">All Locations</option>
                     {locations.map((location) => (
@@ -812,8 +855,13 @@ const PackagesPage = () => {
             transition={{ duration: 0.5 }}
             className="text-center py-16 bg-white rounded-xl shadow-md"
           >
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">No packages found</h3>
-            <p className="text-gray-600 mb-6">Try adjusting your search criteria or explore our featured packages.</p>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              No packages found
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Try adjusting your search criteria or explore our featured
+              packages.
+            </p>
             <button
               onClick={handleReset}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -843,7 +891,8 @@ const PackagesPage = () => {
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = "https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=clouds-cloudy-conifers-247478.jpg&fm=jpg";
+                      e.target.src =
+                        "https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=clouds-cloudy-conifers-247478.jpg&fm=jpg";
                     }}
                   />
                   {pkg.featured && (
@@ -853,7 +902,9 @@ const PackagesPage = () => {
                   )}
                   <div className="absolute top-4 right-4 bg-white rounded-full px-2 py-1 flex items-center shadow-md">
                     <Star size={16} className="text-yellow-500 mr-1" />
-                    <span className="font-bold text-gray-800">{pkg.rating}</span>
+                    <span className="font-bold text-gray-800">
+                      {pkg.rating}
+                    </span>
                   </div>
                 </div>
 
@@ -863,7 +914,9 @@ const PackagesPage = () => {
                     <span className="text-sm">{pkg.location}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{pkg.name}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {pkg.name}
+                  </h3>
 
                   <div className="flex flex-wrap gap-y-2 gap-x-4 mb-4">
                     <div className="flex items-center text-gray-600">
@@ -877,12 +930,18 @@ const PackagesPage = () => {
                     </div>
                   </div>
 
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">{pkg.description}</p>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {pkg.description}
+                  </p>
 
                   <div className="flex justify-between items-end">
                     <div>
-                      <div className="text-gray-500 text-sm line-through">₹{pkg.plans[0].actualPrice}</div>
-                      <div className="text-xl font-bold text-blue-600">₹{pkg.plans[0].discountedPrice}</div>
+                      <div className="text-gray-500 text-sm line-through">
+                        ₹{pkg.plans[0].actualPrice}
+                      </div>
+                      <div className="text-xl font-bold text-blue-600">
+                        ₹{pkg.plans[0].discountedPrice}
+                      </div>
                     </div>
                     <Link
                       to={`/packages/${pkg.id}`}

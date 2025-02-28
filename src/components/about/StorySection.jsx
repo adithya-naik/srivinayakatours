@@ -215,7 +215,7 @@ const StorySection = ({ registerRef, hoveredIcon, setHoveredIcon, milestones }) 
 
   return (
     <div 
-      className="mb-16"
+      className="mb-16 "
       ref={el => registerRef('story-section', el)}
       data-aos="fade-up"
     >
@@ -302,7 +302,7 @@ const StorySection = ({ registerRef, hoveredIcon, setHoveredIcon, milestones }) 
                 data-aos="fade-right"
               >
                 <div 
-                  className="bg-blue-600 bg-opacity-20 p-3 rounded-full mr-4 transform transition-all duration-500 hover:scale-110 hover:bg-opacity-30 hover:rotate-6"
+                  className="bg-blue-600 bg-opacity-20  rounded-full mr-4 transform transition-all duration-500 hover:scale-110 hover:bg-opacity-30 hover:rotate-6"
                   data-aos="zoom-in"
                 >
                   <div className="animate-spin-slow">
@@ -324,7 +324,7 @@ const StorySection = ({ registerRef, hoveredIcon, setHoveredIcon, milestones }) 
               </div>
               
               {/* Timeline Component */}
-              <div className="relative z-10 pl-8 ml-2" data-aos="fade-up" data-aos-delay="100">
+              <div className="relative z-10 pl-8 " data-aos="fade-up" data-aos-delay="100">
                 {/* Timeline vertical line */}
                 <div className="absolute left-0 top-0 h-full w-1 bg-blue-400 rounded-full"></div>
                 
@@ -334,25 +334,33 @@ const StorySection = ({ registerRef, hoveredIcon, setHoveredIcon, milestones }) 
                     className={`relative mb-8 ${index === defaultMilestones.length - 1 ? "" : "pb-6"}`}
                   >
                     {/* Timeline node */}
-                    <div className="absolute -left-10 -top-1 w-6 h-6 bg-yellow-400 rounded-full border-4 border-blue-600 z-10 group-hover:scale-125 transition-all duration-300"></div>
+                    <div className="absolute -left-10 -top-1 w-6 h-6 bg-gray-400 rounded-full border-4 border-blue-600 z-10 group-hover:scale-125 transition-all duration-300"></div>
                     
                     {/* Content card */}
-                    <div className="group bg-blue-800 bg-opacity-30 rounded-xl p-5 hover:bg-opacity-50 transition-all duration-300 border border-blue-600 border-opacity-30 hover:shadow-glow">
-                      <div className="flex items-start">
-                        <div className="bg-blue-600 text-white font-bold px-3 py-1 rounded-lg mr-4 transition-all duration-500 group-hover:bg-yellow-400 group-hover:text-blue-900 transform group-hover:-rotate-3 group-hover:scale-110 min-w-16 text-center">
-                          {milestone.year}
-                        </div>
-                        <div className="flex flex-col flex-1">
-                          <div className="flex items-center mb-2">
-                            <div className="mr-2 transform transition-all duration-500 group-hover:scale-125 group-hover:rotate-12">
-                              {milestone.icon}
-                            </div>
-                            <p className="text-white font-medium text-lg">{milestone.event}</p>
-                          </div>
-                          <p className="text-blue-100 text-sm opacity-80 group-hover:opacity-100 transition-all duration-300">{milestone.detail}</p>
-                        </div>
-                      </div>
-                    </div>
+                    <div className="group cursor-pointer bg-blue-800 bg-opacity-30 rounded-2xl p-6 hover:bg-opacity-50 transition-all duration-300 border border-blue-600 border-opacity-30 hover:shadow-lg hover:shadow-blue-600/50 transform hover:-translate-y-1 h-full flex flex-col">
+  
+  {/* Year Badge - Always on top in mobile */}
+  <div className="bg-blue-600 md:w-16 text-white font-bold px-4 py-2 rounded-lg transition-all duration-500 group-hover:bg-yellow-400 group-hover:text-blue-900 transform group-hover:-rotate-6 group-hover:scale-110 min-w-[50px] text-center mb-4 md:mb-0">
+    {milestone.year}
+  </div>
+
+  {/* Content Section */}
+  <div className="flex flex-col flex-1">
+    <div className="flex items-center mb-2 space-x-2">
+      <div className="transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 text-white">
+        {milestone.icon}
+      </div>
+      <p className="text-white font-semibold text-lg md:text-xl">
+        {milestone.event}
+      </p>
+    </div>
+    
+    <p className="text-blue-100 text-sm md:text-base opacity-80 group-hover:opacity-100 transition-all duration-300">
+      {milestone.detail}
+    </p>
+  </div>
+</div>
+
                   </div>
                 ))}
               </div>
