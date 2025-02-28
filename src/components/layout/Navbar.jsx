@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, User, ShoppingBag, LogOut, Gift } from "lucide-react";
+import { Menu, X, ChevronDown, User, ShoppingBag, LogOut, Gift, AlertCircle } from "lucide-react";
 import { AuthContext } from "../../context/AuthContext"; 
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -8,6 +8,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
   const { state, logout } = useContext(AuthContext);
   const location = useLocation();
@@ -55,6 +56,7 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
     setIsProfileOpen(false);
+    setShowLoginMessage(false);
   }, [location]);
 
   const navLinks = [
@@ -73,10 +75,27 @@ const Navbar = () => {
     setIsProfileOpen(!isProfileOpen);
   };
 
+  const handleBookingsClick = (e) => {
+    if (!state.isAuthenticated) {
+      e.preventDefault();
+      setShowLoginMessage(true);
+      setTimeout(() => setShowLoginMessage(false), 3000);
+    }
+  };
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-2" : "bg-blue-600 bg-opacity-80 py-4"}`}>
       <div className="container flex items-center mx-auto justify-between">
         <Link to="/" className="flex items-center">
+          <img 
+            src="/logo.png" 
+            alt="Sri Vinayaka Travels Logo" 
+            className="h-10 w-auto mr-2"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://via.placeholder.com/40x40?text=SVT";
+            }}
+          />
           <h1 className={`text-2xl font-bold transition-colors duration-300 ${isScrolled ? "text-primary-dark" : "text-white"}`}>
             Sri Vinayaka Travels
           </h1>
@@ -89,6 +108,16 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
+
+          {/* My Bookings Link - Always visible but with login check */}
+          {/* <Link 
+            to={state.isAuthenticated ? "/my-bookings" : "#"} 
+            onClick={handleBookingsClick}
+            className={`text-sm font-medium transition-colors duration-300 ${isScrolled ? "text-gray-700 hover:text-primary-dark" : "text-white hover:text-primary-light"} flex items-center`}
+          >
+            <ShoppingBag size={16} className="mr-1" />
+            My Bookings
+          </Link> */}
 
           {state.isAuthenticated ? (
             <div className="relative">
@@ -118,10 +147,10 @@ const Navbar = () => {
                       <ShoppingBag size={16} className="mr-2" />
                       My Bookings
                     </Link>
-                    {/* <Link to="/special-offers" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
+                    <Link to="/special-offers" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                       <Gift size={16} className="mr-2" />
                       Special Offers
-                    </Link> */}
+                    </Link>
                     <button onClick={handleLogout} className="w-full text-left flex items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors duration-200">
                       <LogOut size={16} className="mr-2" />
                       Logout
@@ -147,6 +176,22 @@ const Navbar = () => {
           {isOpen ? <X className={isScrolled ? "text-gray-700" : "text-white"} size={24} /> : <Menu className={isScrolled ? "text-gray-700" : "text-white"} size={24} />}
         </button>
       </div>
+
+      {/* Login Message Notification */}
+      <AnimatePresence>
+        {showLoginMessage && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-2 rounded shadow-md flex items-center z-50"
+          >
+            <AlertCircle size={16} className="mr-2" />
+            Please login to view your bookings
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Navigation Menu */}
       <AnimatePresence>
@@ -174,6 +219,20 @@ const Navbar = () => {
                     {link.name}
                   </Link>
                 ))}
+                
+                {/* My Bookings Mobile Link */}
+                <Link 
+                  to={state.isAuthenticated ? "/my-bookings" : "#"} 
+                  onClick={handleBookingsClick}
+                  className={`flex items-center py-3 px-4 rounded-md text-sm font-medium transition-colors duration-300 ${
+                    location.pathname === "/my-bookings" 
+                      ? "bg-blue-50 text-primary-dark font-semibold" 
+                      : "text-gray-700 hover:bg-gray-50 hover:text-primary-dark"
+                  }`}
+                >
+                  <ShoppingBag size={16} className="mr-2" />
+                  My Bookings
+                </Link>
               </div>
               
               {/* Authentication Section */}
@@ -224,11 +283,11 @@ const Navbar = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex px-4 space-x-2">
-                    <Link to="/login" className="flex-1 py-2 text-center text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors duration-300">
+                  <div className="flex flex-col px-4 space-y-2">
+                    <Link to="/login" className="py-2 text-center text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors duration-300">
                       Login
                     </Link>
-                    <Link to="/register" className="flex-1 py-2 text-center text-sm font-medium text-red-600 border border-red-600 hover:bg-red-50 rounded-md transition-colors duration-300">
+                    <Link to="/register" className="py-2 text-center text-sm font-medium text-red-600 border border-red-600 hover:bg-red-50 rounded-md transition-colors duration-300">
                       Register
                     </Link>
                   </div>

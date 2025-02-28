@@ -19,6 +19,7 @@ import MyBookingsPage from "./components/MyBookingsPage.jsx"
 import AOS from 'aos';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import 'aos/dist/aos.css';
+import SpecialOffers from './components/layout/SpecialOffers.jsx';
 
 function App() {
   useEffect(() => {
@@ -49,6 +50,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-conditions" element={<TermsConditionsPage />} />
           <Route path="/cancellation-policy" element={<CancellationPolicyPage />} />
+          <Route path="/special-offers" element={<SpecialOffers />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

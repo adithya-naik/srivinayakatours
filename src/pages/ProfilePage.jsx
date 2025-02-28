@@ -12,7 +12,7 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
-  const [showWelcomeGuide, setShowWelcomeGuide] = useState(false);
+  const [showWelcomeGuide, setShowWelcomeGuide] = useState(true);
   const [localUsers, setLocalUsers] = useState([]);
   
   const [formData, setFormData] = useState({
